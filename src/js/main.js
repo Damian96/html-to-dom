@@ -79,6 +79,8 @@ var showFullScreen  = function() {
     if (typeof output === 'undefined' || output == null || output.length == 0)
         return false;
 
+    $('body').addClass('fullscreen');
+
     var popup   = $('#source-popup');
     var pre     = popup.find('pre').find('code');
 
@@ -86,7 +88,6 @@ var showFullScreen  = function() {
     hljs.highlightBlock(pre[0]);
 
     popup.removeClass('hidden');
-    $('body').addClass('fullscreen');
 
     $('#popup-close').click(function() {
         popup.addClass('_hiding');
