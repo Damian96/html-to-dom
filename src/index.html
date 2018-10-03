@@ -37,12 +37,12 @@
 <body>
     <div class="container">
         <div class="row p-4">
-            <h1 class="text-center">HTML TO DOM</h1>
+            <h1 class="text-center">HTML to DOM</h1>
         </div>
         <form class="needs-validation form form-inline">
             <div class="form-row p-2">
                 <div class="form-group col-sm-12 col-md-12 col-lg-12 p-1">
-                    <label for="source">HTML <span class="text-danger">*</span></label>
+                    <label for="source">Input HTML <span class="text-danger">*</span></label>
                     <textarea id='source' class="form-control" name='source' placeholder='Insert the markup here...' aria-describedby="source-help"></textarea>
                     <small id="source-help" class="form-text text-muted">
                         The HTML code to be parsed. Only the Content of the document will be included (body). Unclosed elements will be auto corrected, but unclosed bracketed delimiters wont.
@@ -62,6 +62,7 @@
                     </div>
                     <small id="prefix-help" class="form-text text-muted">
                         The prefix of the generated variables' names.
+                        <br>Variable Name Format: {prefix}_{n}.
                     </small>
                     <div class="invalid-feedback"></div>
                     <div class="valid-feedback"></div>
@@ -90,23 +91,42 @@
                         <label class="custom-control-label" for="whitespace">Include Whitespace</label>
                     </div>
                     <small id="whitespace-help" class="form-text text-muted">
-                        Whether to include <b>whitespace (space or line-breaks)</b> as <a title="Text" href="https://developer.mozilla.org/en-US/docs/Web/API/Text">Text Nodes</a>.
+                        Whether to include <b>whitespace (space, line-breaks)</b> as <a title="Text" href="https://developer.mozilla.org/en-US/docs/Web/API/Text">Text Nodes</a>.
                     </small>
                 </div>
             </div>
-            <div class="form-row p-2 form-actions">
+            <div class="form-row form-actions">
                 <div class="form-group col-sm-12 col-md-12 col-lg-12 p-1">
-                    <button id="submit" type='button' class="btn btn-lg btn-primary">Convert</button>
+                    <button id="submit" type='button' class="btn btn-lg btn-primary" title="Convert HTML to JS">Convert</button>
+                    <button id="reset" type='reset' class="btn btn-md btn-warning" title="Reset the form, to its defaults">Reset</button>
+                    <button id="download" type='button' class='btn btn-md btn-info' title="Download the output as a .js file">Download as file</button>
                 </div>
             </div>
             <div id='error' class="error-block hidden"></div>
         </form>
-        <div class="row p-2">
+        <div class="row p-2 result-container">
             <div class="col-sm-12 col-md-12 col-lg-12 p-1">
-                <pre id='result' class='empty'>
+                <label for="result">Javascript Output</label>
+                <pre id='result' class='form-control empty' aria-label='result'>
                     <code class="javascript"></code>
                 </pre>
-                <span id="copy" class="btn btn-sm tooltipped tooltipped-no-delay tooltipped-ne border p-1 mb-2 mr-2 float-left" aria-label="Copy to clipboard">
+                <div class="result-pops">
+                    <span id="copy" class="btn btn-sm tooltipped tooltipped-no-delay tooltipped-ne border p-1 mb-2 mr-2 float-left" aria-label="Copy to clipboard">
+                        <i class="fa fa-copy fa-fw"></i>
+                    </span>
+                    <span id="fullscreen" class="btn btn-sm tooltipped tooltipped-no-delay tooltipped-ne border p-1 mb-2 mr-2 float-left" aria-label="Show in Fullscreen">
+                        <i class="fa fa-expand-arrows-alt fa-fw"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div id="source-popup" class="container p-3 hidden">
+            <button id='popup-close' class="btn btn-sm btn-danger" title="Close fullscreen" aria-label="close">&#10005;</button>
+            <pre id='result-popup' class='form-control' aria-label='result'>
+                <code class="javascript"></code>
+            </pre>
+            <div class="result-pops">
+                <span id="copy" class="btn btn-sm tooltipped tooltipped-no-delay tooltipped-nw border p-1 mb-2 mr-2 float-left" aria-label="Copy to clipboard">
                     <i class="fa fa-copy fa-fw"></i>
                 </span>
             </div>

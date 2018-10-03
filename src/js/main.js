@@ -5,6 +5,8 @@ var prefix;
 var result;
 var output;
 var clipboard;
+var download;
+var error;
 
 var validatePrefix  = function() {
     var isValid     = converter.validateVarName( prefix.val() );
@@ -46,10 +48,63 @@ var validateSource  = function() {
     return false;
 };
 
+var downloadFile    = function() {
+    'use strict';
+    if ( ! validateSource() || ! validatePrefix() )
+        return false;
+
+    if (typeof output === 'undefined' || output == null || output.length == 0)
+        return false;
+
+    var now     = Date.now();
+    var file    = new File([output], 'htmltodom-' + now + '.js', {
+        type: 'text/javascript',
+        lastModified: now
+    } );
+
+    var link   = document.createElement('a')
+    link.href  = URL.createObjectURL(file);
+    link.setAttribute('download', file.name);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+};
+
+var showFullScreen  = function() {
+    'use strict';
+
+    if ( ! validateSource() || ! validatePrefix() )
+        return false;
+
+    if (typeof output === 'undefined' || output == null || output.length == 0)
+        return false;
+
+    var popup   = $('#source-popup');
+    var pre     = popup.find('pre');
+
+    pre.html(output);
+    hljs.highlightBlock(pre[0]);
+
+    popup.removeClass('hidden');
+    $('body').addClass('fullscreen');
+
+    $('#popup-close').click(function() {
+        popup.addClass('_hiding');
+        popup.on('transitionEnd webkitTransitionEnd mozTransitionEnd oTransitionEnd msTransitionEnd', function() {
+            if (popup.hasClass('_hiding')) {
+                popup.addClass('hidden').removeClass('_hiding');
+                $('body').removeClass('fullscreen');
+            }
+        });
+    });
+};
+
 $(function () {
-    source  = $('#source');
-    prefix  = $('#prefix');
-    result  = $('#result');
+    source      = $('#source');
+    prefix      = $('#prefix');
+    result      = $('#result');
+    download    = $('#download');
+    error       = $('#error');
 
     // Higlight.js - Result Code
     result.html('// Javascript code will appear here...');
@@ -58,11 +113,16 @@ $(function () {
     
     source.on('change focusout blur', validateSource);
     prefix.on('change focusout blur keyup', validatePrefix);
+    download.click(downloadFile);
+    $('#reset').click(function() {
+        result.html('// Javascript code will appear here...');
+    });
+    $('#fullscreen').click(showFullScreen);
+
 
     $("#submit").on('click', function() {
-        if ( ! validatePrefix() || ! validateSource() ) {
+        if ( ! validateSource() || ! validatePrefix() )
             return false;
-        }
 
         var data = new Object({
             src: source.val(),
@@ -83,7 +143,7 @@ $(function () {
             // Higlight.js - Result Code
             hljs.highlightBlock(result[0]);
 
-            $('#error').addClass('hidden');
+            error.addClass('hidden');
 
             clipboard = new ClipboardJS('#copy', {
                 text: function(trigger) {
@@ -103,9 +163,11 @@ $(function () {
 
             // Higlight.js
             result.html('// Error, see above.');
-            $('#error').removeClass('hidden').html(e);
+            error.removeClass('hidden').html(e);
 
             hljs.highlightBlock(result[0]);
+
+            output  = '';
 
             if ( clipboard != null )
                 clipboard.destroy();
