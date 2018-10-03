@@ -11,7 +11,7 @@ module.exports = function (grunt) {
         datetime: Date.now(),
 
         paths: {
-            build: './build',
+            build: './docs',
             src: './src',
             modules: './node_modules',
             vendor: './vendor'

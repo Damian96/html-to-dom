@@ -1,4 +1,4 @@
-# HTML to DOM
+# Description
 An HTML to Javascript DOM converter tool
 
 # Changelog
