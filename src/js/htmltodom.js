@@ -36,7 +36,12 @@ function htmltodom() {
             return 'ie';
     };
 
+    this.__addSlashes = function (str) {
+        return (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+    };
+
     var browser = this.__findBrowserType();
+    var instance    = this;
 
     if (browser === 'webkit') {
         String.prototype.toSource = function () {
@@ -47,7 +52,7 @@ function htmltodom() {
             } else
                 literal = this;
 
-            return "(new String(\"" + this.__addSlashes( literal ) + "\"))";
+            return "(new String(\"" + instance.__addSlashes( literal ) + "\"))";
         };
     } else if (browser === 'ie')
         throw new Error('HTMLToDOM does not support Internet Explorer');

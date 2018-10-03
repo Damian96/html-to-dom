@@ -134,7 +134,7 @@ $(function () {
             }
         });
 
-        console.log('options', data.options);
+        // console.log('options', data.options);
 
         try {
             output  = converter.convert(data);
