@@ -1,0 +1,78 @@
+#source {
+  width: 100%;
+  min-height: 200px;
+  max-height: 400px; }
+
+#result {
+  display: block;
+  max-width: 100%;
+  min-height: 100px;
+  height: 200px;
+  overflow: auto;
+  resize: vertical;
+  border-radius: 5px;
+  word-wrap: break-word; }
+  #result.empty + #copy {
+    display: none; }
+  #result:not(.empty):hover + #copy {
+    opacity: 1; }
+    #result:not(.empty):hover + #copy:hover {
+      opacity: 1; }
+
+#copy {
+  background-color: #d5d5d5;
+  border-radius: 7.5%;
+  color: #000;
+  background-color: #eee;
+  background-image: linear-gradient(#fcfcfc, #eee);
+  border: 1px solid #d5d5d5;
+  opacity: 0;
+  position: absolute;
+  top: 15px;
+  right: 30px;
+  transition: opacity .3s ease-in-out; }
+  #copy:hover {
+    opacity: 1;
+    background-color: #ddd;
+    background-image: linear-gradient(#eee, #ddd);
+    border-color: #ccc; }
+
+form.form .form-group {
+  min-height: 160px;
+  align-content: center;
+  justify-content: center; }
+  form.form .form-group > .custom-control,
+  form.form .form-group > .input-group,
+  form.form .form-group > .form-control,
+  form.form .form-group > label {
+    min-width: 51%; }
+  form.form .form-group .form-text {
+    min-width: 51%;
+    text-align: justify; }
+  form.form .form-group.is-invalid .invalid-feedback {
+    display: flex;
+    align-content: center;
+    justify-content: center; }
+  form.form .form-group.is-valid .valid-feedback {
+    display: flex;
+    align-content: center;
+    justify-content: center; }
+
+form.form .form-actions {
+  width: 100%; }
+  form.form .form-actions .form-group {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+
+.form-group.is-invalid .invalid-feedback {
+  display: block; }
+
+form.form .error-block {
+  width: 100%;
+  color: red;
+  text-align: center;
+  font-size: 18px; }
+
+/*# sourceMappingURL=main.css.map */

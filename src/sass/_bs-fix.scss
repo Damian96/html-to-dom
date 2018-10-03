@@ -1,0 +1,16 @@
+.form-group {
+    &.is-invalid  {
+        .invalid-feedback {
+            display: block;
+        }
+    }
+}
+
+form.form {
+    .error-block {
+        width: 100%;
+        color: red;
+        text-align: center;
+        font-size: 18px;
+    }
+}

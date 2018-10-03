@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>HTML to DOM</title>
+
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/fontawesome.min.css">
+
+    <!-- <Primer Tooltips>-->
+    <link rel="stylesheet" href="./css/primer.min.css">    
+    <!-- </Primer Tooltips>-->
+    <script type='text/javascript' src='./js/jquery.min.js'></script>
+    <script type='text/javascript' src='./js/bootstrap.min.js'></script>
+
+    <!-- <Highlight.js> -->
+    <link rel="stylesheet" href="./css/highlight.min.css">
+    <script src="./js/highlight.min.js"></script>
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+    <!-- </Highlight.js> -->
+
+    <!-- <Clipboard js> -->
+    <script type='text/javascript' src="./js/clipboard.min.js"></script>
+    <!-- </Clipboard js> -->
+    <!-- <HTML-to-DOM> -->
+    <script type='text/javascript' src='./js/dom-parser.js'></script>
+    <script type='text/javascript' src='./js/htmltodom.js'></script>
+    <!-- </HTML-to-DOM> -->
+
+    <script type='text/javascript' src='./js/main.js'></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row p-4">
+            <h1 class="text-center">HTML TO DOM</h1>
+        </div>
+        <form class="needs-validation form form-inline">
+            <div class="form-row p-2">
+                <div class="form-group col-sm-12 col-md-12 col-lg-12 p-1">
+                    <label for="source">HTML <span class="text-danger">*</span></label>
+                    <textarea id='source' class="form-control" name='source' placeholder='Insert the markup here...' aria-describedby="source-help"></textarea>
+                    <small id="source-help" class="form-text text-muted">
+                        The HTML code to be parsed. Only the Content of the document will be included (body). Unclosed elements will be auto corrected, but unclosed bracketed delimiters wont.
+                    </small>
+                    <div class="invalid-feedback"></div>
+                    <div class="valid-feedback"></div>
+                </div>
+            </div>
+            <div class="form-row p-2">
+                <div class="form-group col-sm-12 col-md-6 col-lg-6 p-2">
+                    <label for="prefix">Variable name prefix <span class="text-danger">*</span></label>
+                    <div class="input-group mb-3">
+                        <input id='prefix' name='prefix' class="form-control" placeholder='Default: node' aria-label="Variable Prefix" aria-describedby="prefix-help" />
+                        <div class="input-group-append">
+                            <span class="input-group-text id="prefix-addon">_{n}</span>
+                        </div>
+                    </div>
+                    <small id="prefix-help" class="form-text text-muted">
+                        The prefix of the generated variables' names.
+                    </small>
+                    <div class="invalid-feedback"></div>
+                    <div class="valid-feedback"></div>
+                </div>
+                <div class="form-group col-sm-12 col-md-6 col-lg-6 p-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="plain-text" aria-label="Include plain text" aria-describedby="plain-text-help" checked/>
+                        <label class="custom-control-label" for="plain-text">Include Plain Text</label>
+                    </div>
+                    <small id="plain-text-help" class="form-text text-muted">
+                        Whether to include plain text as <a title="Text" href="https://developer.mozilla.org/en-US/docs/Web/API/Text">Text Nodes</a>.
+                    </small>
+                </div>
+                <div class="form-group col-sm-12 col-md-6 col-lg-6 p-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="comments" aria-label="Include comments" aria-describedby="comments-help"/>
+                        <label class="custom-control-label" for="comments">Include Comments</label>
+                    </div>
+                    <small id="comments-help" class="form-text text-muted">
+                        Whether to include HTML comments as <a title="Text" href="https://developer.mozilla.org/en-US/docs/Web/API/Comment">Comment Nodes</a>.
+                    </small>
+                </div>
+                <div class="form-group col-sm-12 col-md-6 col-lg-6 p-2">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="whitespace" aria-label="Include whitespace" aria-describedby="whitespace-help"/>
+                        <label class="custom-control-label" for="whitespace">Include Whitespace</label>
+                    </div>
+                    <small id="whitespace-help" class="form-text text-muted">
+                        Whether to include <b>whitespace (space or line-breaks)</b> as <a title="Text" href="https://developer.mozilla.org/en-US/docs/Web/API/Text">Text Nodes</a>.
+                    </small>
+                </div>
+            </div>
+            <div class="form-row p-2 form-actions">
+                <div class="form-group col-sm-12 col-md-12 col-lg-12 p-1">
+                    <button id="submit" type='button' class="btn btn-lg btn-primary">Convert</button>
+                </div>
+            </div>
+            <div id='error' class="error-block hidden"></div>
+        </form>
+        <div class="row p-2">
+            <div class="col-sm-12 col-md-12 col-lg-12 p-1">
+                <pre id='result' class='empty'>
+                    <code class="javascript"></code>
+                </pre>
+                <span id="copy" class="btn btn-sm tooltipped tooltipped-no-delay tooltipped-ne border p-1 mb-2 mr-2 float-left" aria-label="Copy to clipboard">
+                    <i class="fa fa-copy fa-fw"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
