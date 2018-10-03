@@ -80,7 +80,7 @@ var showFullScreen  = function() {
         return false;
 
     var popup   = $('#source-popup');
-    var pre     = popup.find('pre');
+    var pre     = popup.find('pre').find('code');
 
     pre.html(output);
     hljs.highlightBlock(pre[0]);
@@ -102,20 +102,21 @@ var showFullScreen  = function() {
 $(function () {
     source      = $('#source');
     prefix      = $('#prefix');
-    result      = $('#result');
+    result      = { pre: $('#result') };
+    result.code = result.pre.find('code');
     download    = $('#download');
     error       = $('#error');
 
     // Higlight.js - Result Code
-    result.html('// Javascript code will appear here...');
+    result.code.html('// Javascript code will appear here...');
     // hljs.configure({useBR: true});
-    hljs.highlightBlock(result[0]);
+    hljs.highlightBlock(result.code[0]);
     
     source.on('change focusout blur', validateSource);
     prefix.on('change focusout blur keyup', validatePrefix);
     download.click(downloadFile);
     $('#reset').click(function() {
-        result.html('// Javascript code will appear here...');
+        result.code.html('// Javascript code will appear here...');
     });
     $('#fullscreen').click(showFullScreen);
 
@@ -138,11 +139,12 @@ $(function () {
 
         try {
             output  = converter.convert(data);
-            result.html(output);
-            result.removeClass('empty');
-            // Higlight.js - Result Code
-            hljs.highlightBlock(result[0]);
+            result.code.html(output);
 
+            // Higlight.js - Result Code
+            hljs.highlightBlock(result.code[0]);
+
+            result.pre.removeClass('empty');
             error.addClass('hidden');
 
             clipboard = new ClipboardJS('#copy', {
@@ -161,11 +163,13 @@ $(function () {
         } catch( e ) {
             console.error(e);
 
+            result.pre.addClass('empty');
+
             // Higlight.js
-            result.html('// Error, see above.');
+            result.code.html('// Error, see above.');
             error.removeClass('hidden').html(e);
 
-            hljs.highlightBlock(result[0]);
+            hljs.highlightBlock(result.code[0]);
 
             output  = '';
 

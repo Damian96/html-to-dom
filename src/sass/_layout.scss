@@ -14,6 +14,15 @@
     border-radius: 5px;
     word-wrap: break-word;
 
+    > code {
+        min-width: 100%;
+        max-width: 100%;
+        min-height: 100%;
+        max-height: 100%;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
     &.empty + .result-pops {
         display: none;
     }
@@ -136,6 +145,23 @@ form.form {
                     margin-right: 0;
                 }
             }
+        }
+    }
+}
+
+footer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background: $dark;
+
+    p {
+        color: #fff;
+
+        a {
+            color: lighten( $primary, 25%);
         }
     }
 }

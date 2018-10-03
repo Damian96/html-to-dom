@@ -10,6 +10,7 @@
   "author": "Damianos Giankakis",
   "license": "UNLICENSED",
   "dependencies": {
+    "autoprefixer": "^9.1.5",
     "bootstrap": "^4.0.0",
     "clipboard": "^2.0.1",
     "grunt": "~1.0.3",
@@ -20,6 +21,7 @@
     "grunt-contrib-uglify": "~3.0.1",
     "grunt-contrib-uglify-es": "^3.3.0",
     "grunt-contrib-watch": "^1.1.0",
+    "grunt-postcss": "^0.9.0",
     "grunt-sass": "~3.0.1",
     "jquery": "~3.3.1",
     "node-sass": "~4.9.3",

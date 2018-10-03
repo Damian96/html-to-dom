@@ -59,6 +59,22 @@ module.exports = function (grunt) {
             }
         },
 
+        postcss: {
+            options: {
+                map: false,
+                processors: [
+                    // require('pixrem')(), // add fallbacks for rem units
+                    require('autoprefixer')({
+                        browsers: 'last 2 versions'
+                    }), // add vendor prefixes
+                ]
+            },
+            main: {
+                src: '<%= paths.build %>/css/main.css',
+                dest: '<%= paths.build %>/css/main.css'
+            }
+        },
+
         sass: {
             options: {
                 implementation: sass,
@@ -154,7 +170,15 @@ module.exports = function (grunt) {
             src_sass: {
                 files: ['<%= paths.src %>/sass/*.scss'],
                 tasks: ['sass:src_sass'],
-            }
+            },
+            // debug_main: {
+            //     files: ['<%= paths.src %>/js/main.js'],
+            //     tasks: ['jshint:main'],
+            // },
+            // debug: {
+            //     files: ['<%= paths.src %>/js/htmltodom.js'],
+            //     tasks: ['jshint:htmltodom'],
+            // }
         }
     });
 
@@ -164,6 +188,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-contrib-uglify-es');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-postcss');
     grunt.loadNpmTasks('grunt-sass');
 
     // Default task.- alias of 'build'
@@ -173,7 +198,7 @@ module.exports = function (grunt) {
 
     // same as 'default'
     grunt.registerTask( 'build', [
-        'clean', 'sass:build', 'copy', 'cssmin', 'uglify' 
+        'clean', 'sass:build', 'copy', 'postcss:main', 'cssmin', 'uglify' 
     ] );
 
     // same as 'watch'
