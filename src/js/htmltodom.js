@@ -40,6 +40,7 @@ function htmltodom() {
         return (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
     };
 
+    // Fix webkit String.toSource
     var browser = this.__findBrowserType();
     var instance    = this;
 
@@ -144,20 +145,17 @@ function htmltodom() {
 
             if (parent && parent != null)
                 output += "\n" + parent + ".appendChild(" + varname + ");";
+                
             this.__varCount++;
-
             output += "\n";
-        } else if (node.nodeType == Node.CDATA_SECTION_NODE) { // @FIXME:
-            var data    = this.__escapeCDATA(node.data);
-            data        = data.toSource();
-
-            output  += "\nvar " + varname + " = document.createCDATASection(" + data + ");";
+        } else if (node.nodeType == Node.CDATA_SECTION_NODE) {
+            output  += "\nvar " + varname + " = document.createCDATASection(" + this.__escapeCDATA(node.data).toSource() + ");";
 
             if (parent && parent != null)
                 output += "\n" + parent + ".appendChild(" + varname + ");";
-            this.__varCount++;
-
+                
             output += "\n";
+            this.__varCount++;
         }
 
         return output;
@@ -266,10 +264,8 @@ function htmltodom() {
 
             if (entry.length > 1)
                 output += this.__getTreeCode(entry);
-            else {
+            else
                 output += this.__getElementCode(this.__varPrefix + this.__varCount, entry[0]);
-                this.__varCount++;
-            }
 
         }.bind(this));
 

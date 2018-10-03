@@ -23,10 +23,8 @@
 .result-container .result-pops {
   position: absolute;
   top: 0;
-  right: 0;
-  width: 100%;
+  right: 20px;
   padding-top: 2px;
-  padding-right: 20px;
   transform: translate(0, 100%); }
 
 .result-pops {
@@ -36,10 +34,7 @@
   align-items: flex-end;
   justify-content: flex-end; }
   .result-pops:hover > span {
-    opacity: 1;
-    background-color: #ddd;
-    background-image: linear-gradient(#eee, #ddd);
-    border-color: #ccc; }
+    opacity: 1; }
   .result-pops > span {
     background-color: #d5d5d5;
     border-radius: 7.5%;
@@ -144,13 +139,13 @@ body.fullscreen {
       top: 5px;
       right: -100%;
       transform: translate(-100%, -50%); }
+  #source-popup #result-popup:hover + .result-pops > span {
+    opacity: 1; }
   #source-popup .result-pops {
     position: relative;
     top: -95%;
-    right: 0;
-    width: 100%;
+    left: calc( 95% - 15px);
     padding-top: 10px;
-    padding-right: 20px;
     transform: translate(0, 10%); }
   #source-popup._hiding {
     transform: scale(0); }

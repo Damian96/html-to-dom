@@ -43,13 +43,19 @@ body.fullscreen {
         }
     }
 
+    #result-popup {
+        &:hover {
+            + .result-pops > span {
+                opacity: 1;
+            }
+        }
+    }
+
     .result-pops {
         position: relative;
         top: -95%;
-        right: 0;
-        width: 100%;
+        left: calc( 95% - 15px );
         padding-top: 10px;
-        padding-right: 20px;
         transform: translate(0, 10%);
     }
 

@@ -32,10 +32,8 @@
     .result-pops {
         position: absolute;
         top: 0;
-        right: 0;
-        width: 100%;
+        right: 20px;
         padding-top: 2px;
-        padding-right: 20px;
         transform: translate(0, 100%);
     }
 }
@@ -50,9 +48,6 @@
     &:hover {
         > span {
             opacity: 1;
-            background-color: #ddd;
-            background-image: linear-gradient(#eee,#ddd);
-            border-color: #ccc;
         }
     }
 
