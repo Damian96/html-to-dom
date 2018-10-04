@@ -23,6 +23,7 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-postcss": "^0.9.0",
     "grunt-sass": "~3.0.1",
+    "highlightjs": "^9.10.0",
     "jquery": "~3.3.1",
     "node-sass": "~4.9.3",
     "primer-tooltips": "^1.5.7",

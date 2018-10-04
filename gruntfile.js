@@ -104,13 +104,13 @@ module.exports = function (grunt) {
                 src: '<%= paths.modules %>/clipboard/dist/clipboard.min.js',
                 dest: '<%= paths.build %>/js/clipboard.min.js'
             },
-            highlightjs: {
-                src: '<%= paths.vendor %>/highlight/highlight.pack.js',
-                dest: '<%= paths.build %>/js/highlight.min.js'
-            },
             highlightcss: {
-                src: '<%= paths.vendor %>/highlight/styles/default.css',
+                src: '<%= paths.modules %>/highlightjs/styles/default.css',
                 dest: '<%= paths.build %>/css/highlight.css'
+            },
+            highlightjs: {
+                src: '<%= paths.modules %>/highlightjs/highlight.pack.min.js',
+                dest: '<%= paths.build %>/js/highlight.min.js'
             },
             bootstrapcss: {
                 src: '<%= paths.modules %>/bootstrap/dist/css/bootstrap.min.css',
