@@ -1,6 +1,6 @@
 {
   "name": "html-to-dom",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An HTML to Javascript DOM converter",
   "main": "index.js",
   "repository": {

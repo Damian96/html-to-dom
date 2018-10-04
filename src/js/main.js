@@ -1,3 +1,4 @@
+/* global hljs,jQuery,htmltodom,ClipboardJS */
 var $           = jQuery;
 var converter   = new htmltodom();
 var source;
@@ -11,7 +12,7 @@ var error;
 var validatePrefix  = function() {
     var isValid     = converter.validateVarName( prefix.val() );
     var group       = prefix.closest('.form-group');
-    var validFeed   = group.find('.valid-feedback');
+    // var validFeed   = group.find('.valid-feedback');
     var invalidFeed = group.find('.invalid-feedback');
     var isEmpty     = ! prefix.val() || prefix.val().length == 0;
 
@@ -62,7 +63,7 @@ var downloadFile    = function() {
         lastModified: now
     } );
 
-    var link   = document.createElement('a')
+    var link   = document.createElement('a');
     link.href  = URL.createObjectURL(file);
     link.setAttribute('download', file.name);
     document.body.appendChild(link);
@@ -149,7 +150,7 @@ $(function () {
             error.addClass('hidden');
 
             clipboard = new ClipboardJS('#copy', {
-                text: function(trigger) {
+                text: function() {
                     return output;
                 }
             });

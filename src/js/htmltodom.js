@@ -1,12 +1,8 @@
 function htmltodom() {
-    'use strict';
-
     // Declare methods - properties
     this.__findBrowserType = function () {
-        'use strict';
-
         // Opera 8.0+
-        var isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+        var isOpera = (!!window.opr && !!window.opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
 
         // Firefox 1.0+
         var isFirefox = typeof InstallTrigger !== 'undefined';
@@ -14,7 +10,7 @@ function htmltodom() {
         // Safari 3.0+ "[object HTMLElementConstructor]" 
         var isSafari = /constructor/i.test(window.HTMLElement) || (function (p) {
             return p.toString() === "[object SafariRemoteNotification]";
-        })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+        })(!window.safari || (typeof window.safari !== 'undefined' && window.safari.pushNotification));
 
         // Internet Explorer 6-11
         var isIE = /*@cc_on!@*/ false || !!document.documentMode;
@@ -46,7 +42,6 @@ function htmltodom() {
 
     if (browser === 'webkit') {
         String.prototype.toSource = function () {
-            'use strict';
             var literal = '';
             if (this.indexOf("\n") > -1) {
                 literal = this.split("\n").join("\\n");
@@ -93,7 +88,6 @@ function htmltodom() {
     };
 
     this.__getChildren = function (array) {
-        'use strict';
 
         var children = [];
 
@@ -216,7 +210,7 @@ function htmltodom() {
 
             // Comments
             if (data.options.hasOwnProperty('comments') && data.options.comments) {
-                this.__options.comments = comments;
+                this.__options.comments = true;
             }
 
         }
