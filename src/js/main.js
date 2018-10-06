@@ -143,6 +143,9 @@ $(function () {
             output  = converter.convert(data);
             result.code.html(output);
 
+            if (window.location.protocol !== 'file:')
+                ga('send', 'event', 'click', 'convert');
+
             // Higlight.js - Result Code
             hljs.highlightBlock(result.code[0]);
 
