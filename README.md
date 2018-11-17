@@ -8,4 +8,4 @@ An HTML to Javascript DOM converter
 [v1.0.0 - First release](https://github.com/Damian96/html-to-dom/releases/tag/v1.0.0)
 
 # License
-UNLICENSED
+Licensed under the [MIT license](LICENSE)
