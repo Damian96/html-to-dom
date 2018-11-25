@@ -61,7 +61,7 @@ function htmltodom() {
         return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
     };
 
-    Node.prototype.hasContent = function() {
+    Node.prototype.hasContent   = function() {
         return this.textContent.hasContent();
     };
 
@@ -174,29 +174,24 @@ function htmltodom() {
 
     this.convert = function (data) {
         console.time('htmltodom');
-        var start   = performance.now();
 
-        // Parse html source
-        var parsedDoc = this.__parse(data);
-
-        // Construct DOM tree
-        var walker  = document.createTreeWalker(parsedDoc, this.__treeArgs, {
+        // Parse html source & Construct DOM tree
+        var walker  = document.createTreeWalker(this.__parse(data), this.__treeArgs, {
         acceptNode: function(node) { // filter whitespace
             if (node.nodeType == Node.TEXT_NODE && !node.hasContent())
                 return NodeFilter.FILTER_REJECT;
             else
                 return NodeFilter.FILTER_ACCEPT;
         }});
+
         var output = '';
         this.__varCount = 1;
 
+        // Main loop
         while(walker.nextNode())
             output += this.__getElementCode(this.__varPrefix + this.__varCount, walker.currentNode);
 
         console.timeEnd('htmltodom');
-        var end = performance.now();
-        var secs = (end - start) / 60;
-        console.log(secs);
 
         return output;
     };
