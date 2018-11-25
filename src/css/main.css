@@ -122,6 +122,9 @@ form.form .error-block {
   text-align: center;
   font-size: 18px; }
 
+h1 small {
+  font-size: 60%; }
+
 body.fullscreen {
   overflow: hidden; }
 
