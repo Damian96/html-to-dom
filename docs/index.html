@@ -5,9 +5,12 @@
     <meta charset="utf-8" />
     <title>HTML to DOM</title>
     <meta name='description' value="A JS utility, that converts HTML markup to Javascript's HTMLElements"/>
-
     <meta name="og:title" value="HTML to DOM converter"/>
     <meta name="og:description" value="A JS utility, that converts HTML markup to Javascript's HTMLElements"/>
+
+    <meta name="robots" value="index,follow"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name=viewport content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="stylesheet" href="./css/main.css">
@@ -35,27 +38,29 @@
     <script type='text/javascript' src='./js/htmltodom.js'></script>
     <!-- </HTML-to-DOM> -->
 
-    <script type='text/javascript' src='./js/main.js'></script>
-
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74692550-11"></script>
     <script type='text/javascript'>
-        window.dataLayer = window.dataLayer || [];
+        if (window.location.protocol !== 'file:') {
+            window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'UA-74692550-11');
         }
-        gtag('js', new Date());
-
-        gtag('config', 'UA-74692550-11');
     </script>
+
+    <script type='text/javascript' src='./js/main.js'></script>
 
 </head>
 
 <body>
     <div class="container">
         <div class="row p-4">
-            <h1 class="text-center">HTML to DOM</h1>
+            <h1 class="text-center">HTML to DOM <small>v1.1.0</small></h1>
         </div>
         <form class="needs-validation form form-inline">
             <div class="form-row p-2">
@@ -107,17 +112,6 @@
                     </div>
                     <small id="comments-help" class="form-text text-muted">
                         Whether to include HTML comments as <a title="Text" href="https://developer.mozilla.org/en-US/docs/Web/API/Comment">Comment
-                            Nodes</a>.
-                    </small>
-                </div>
-                <div class="form-group col-sm-12 col-md-6 col-lg-6 p-2">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="whitespace" aria-label="Include whitespace"
-                            aria-describedby="whitespace-help" />
-                        <label class="custom-control-label" for="whitespace">Include Whitespace</label>
-                    </div>
-                    <small id="whitespace-help" class="form-text text-muted">
-                        Whether to include <b>whitespace (space, line-breaks)</b> as <a title="Text" href="https://developer.mozilla.org/en-US/docs/Web/API/Text">Text
                             Nodes</a>.
                     </small>
                 </div>
