@@ -132,7 +132,6 @@ $(function () {
             options: {
                 prefix: prefix.val(),
                 plaintext: $('#plain-text')[0].checked,
-                whitespace: $('#whitespace')[0].checked,
                 comments: $('#comments')[0].checked
             }
         });
