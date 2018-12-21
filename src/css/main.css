@@ -125,6 +125,9 @@ form.form .error-block {
 h1 small {
   font-size: 60%; }
 
+#source {
+  font-family: Consolas, SFMono-Regular, Menlo, Monaco, "Liberation Mono", "Courier New", monospace; }
+
 body.fullscreen {
   overflow: hidden; }
 

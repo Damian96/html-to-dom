@@ -1,7 +1,7 @@
 # Description
 An HTML to Javascript DOM converter
 
-# Demo
+# Online Tool
 [HTML to DOM Github Page](https://damian96.github.io/html-to-dom/)
 
 # Changelog
