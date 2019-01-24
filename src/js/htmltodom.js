@@ -1,4 +1,5 @@
 function htmltodom() {
+
   // Declare methods - properties
   this.__findBrowserType = function() {
     // Opera 8.0+
@@ -45,6 +46,7 @@ function htmltodom() {
   // Fix webkit String.toSource
   var browser = this.__findBrowserType();
   var instance = this;
+  var output = "";
 
   if (browser === "webkit") {
     String.prototype.toSource = function() {
@@ -98,6 +100,12 @@ function htmltodom() {
     );
 
     return validVarRe.test(name);
+  };
+
+  this.validateTagName = function (name) {
+    var invalidTagNameReg = new RegExp("[^A-Za-z0-9]");
+
+    return !invalidTagNameReg.test(name);
   };
 
   this.__escapeCDATA = function(cdata) {
@@ -169,9 +177,11 @@ function htmltodom() {
           ");";
         break;
     }
-
+    console.debug(node, node.parentElement);
     if (node.hasParent())
       output += "\n" + node.getParentVar() + ".appendChild(" + varname + ");";
+    else if ((node.parentElement.tagName === 'body' || node.parentElement.tagName === 'BODY') && this.__container)
+      output += "\ncontainer.appendChild(" + varname + ");";
 
     this.__varCount++;
     output += "\n";
@@ -210,6 +220,12 @@ function htmltodom() {
       if (data.options.hasOwnProperty("comments") && data.options.comments)
         this.__treeArgs |=
           NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_CDATA_SECTION;
+
+      if (data.options.hasOwnProperty("container") && data.options.container.length != 0) {
+        output += "\nvar container = document.createElement('" + data.options.container + "');\n";
+        this.__container = true;
+      } else
+        this.__container = false;
     }
 
     var parsedDoc = new DOMParser().parseFromString(data.src, "text/html");
@@ -217,11 +233,13 @@ function htmltodom() {
     if (parsedDoc.body.innerHTML.indexOf("<parsererror>") > -1)
       throw new Error("Parse error");
 
-    return parsedDoc;
+    return parsedDoc.body;
   };
 
   this.convert = function(data) {
     console.time("htmltodom");
+
+    output = '';
 
     // Parse html source & Construct DOM tree
     var walker = document.createTreeWalker(
@@ -237,7 +255,6 @@ function htmltodom() {
       }
     );
 
-    var output = "";
     this.__varCount = 1;
 
     // Main loop

@@ -1,8 +1,9 @@
-/* global hljs,jQuery,htmltodom,ClipboardJS */
+/* global hljs,jQuery,htmltodom,ClipboardJS,ga */
 var $           = jQuery;
 var converter   = new htmltodom();
 var source;
 var prefix;
+var container;
 var result;
 var output;
 var clipboard;
@@ -16,11 +17,11 @@ var validatePrefix  = function() {
     var invalidFeed = group.find('.invalid-feedback');
     var isEmpty     = ! prefix.val() || prefix.val().length == 0;
 
-    if ( ! isEmpty && ! isValid ) { // valid
+    if ( ! isEmpty && ! isValid ) { // invalid
         group.removeClass('is-valid').addClass('is-invalid');
         prefix.removeClass('is-valid').addClass('is-invalid');
         invalidFeed.html("Invalid variable name.");
-    } else if ( ! isEmpty ) { // invalid
+    } else if ( ! isEmpty ) { // valid
         group.removeClass('is-invalid').addClass('is-valid');
         prefix.removeClass('is-invalid').addClass('is-valid');
         return true;
@@ -28,6 +29,30 @@ var validatePrefix  = function() {
         group.removeClass('is-valid').addClass('is-invalid');
         prefix.removeClass('is-valid').addClass('is-invalid');
         invalidFeed.html('This field is required.');
+    }
+
+    return false;
+};
+
+var validateContainer = function () {
+    var isValid     = converter.validateTagName( container.val() );
+    var group       = container.closest('.form-group');
+    // var validFeed   = group.find('.valid-feedback');
+    var invalidFeed = group.find('.invalid-feedback');
+    var isEmpty     = ! container.val() || container.val().length == 0;
+
+    if ( ! isEmpty && ! isValid) { // invalid
+        group.removeClass('is-valid').addClass('is-invalid');
+        container.removeClass('is-valid').addClass('is-invalid');
+        invalidFeed.html('The tag name is invalid');
+    } else if ( ! isEmpty ) { // valid
+        group.removeClass("is-invalid").addClass("is-valid");
+        container.removeClass("is-invalid").addClass("is-valid");
+        return true;
+    } else { // empty
+        group.removeClass('is-invalid').removeClass('is-valid');
+        container.removeClass('is-invalid').removeClass('is-valid');
+        return true;
     }
 
     return false;
@@ -51,7 +76,7 @@ var validateSource  = function() {
 
 var downloadFile    = function() {
     'use strict';
-    if ( ! validateSource() || ! validatePrefix() )
+    if ( ! validateSource() || ! validatePrefix() || ! validateContainer() )
         return false;
 
     if (typeof output === 'undefined' || output == null || output.length == 0)
@@ -74,7 +99,7 @@ var downloadFile    = function() {
 var showFullScreen  = function() {
     'use strict';
 
-    if ( ! validateSource() || ! validatePrefix() )
+    if ( ! validateSource() || ! validatePrefix() || ! validateContainer() )
         return false;
 
     if (typeof output === 'undefined' || output == null || output.length == 0)
@@ -104,6 +129,7 @@ var showFullScreen  = function() {
 $(function () {
     source      = $('#source');
     prefix      = $('#prefix');
+    container   = $('#container');
     result      = { pre: $('#result') };
     result.code = result.pre.find('code');
     download    = $('#download');
@@ -113,9 +139,10 @@ $(function () {
     result.code.html('// Javascript code will appear here...');
     // hljs.configure({useBR: true});
     hljs.highlightBlock(result.code[0]);
-    
+
     source.on('change focusout blur', validateSource);
     prefix.on('change focusout blur keyup', validatePrefix);
+    container.on('change focusout blur keyup', validateContainer);
     download.click(downloadFile);
     $('#reset').click(function() {
         result.code.html('// Javascript code will appear here...');
@@ -124,7 +151,7 @@ $(function () {
 
 
     $("#submit").on('click', function() {
-        if ( ! validateSource() || ! validatePrefix() )
+        if ( ! validateSource() || ! validatePrefix() || ! validateContainer() )
             return false;
 
         var data = new Object({
@@ -132,7 +159,8 @@ $(function () {
             options: {
                 prefix: prefix.val(),
                 plaintext: $('#plain-text')[0].checked,
-                comments: $('#comments')[0].checked
+                comments: $('#comments')[0].checked,
+                container: $('#container').val()
             }
         });
 
